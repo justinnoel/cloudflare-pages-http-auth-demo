@@ -13,7 +13,7 @@ export async function auth({ env, next, request }) {
 			return await next();
 		}
 
-		const authHeader = request.headers.get('authorization');
+		const authHeader = request?.headers?.get('authorization');
 
 		if (!authHeader?.includes('Basic')) {
 			return new Response('Unauthorized', { status: 401, headers: { 'WWW-Authenticate': 'Basic' } });
@@ -21,7 +21,7 @@ export async function auth({ env, next, request }) {
 
 		const base64Credentials = authHeader?.split(' ')[1];
 		const [username, password] = atob(base64Credentials).split(':');
-		const userPasswordKV = await env.REALTOR_PAGES_AUTH.get(username);
+		const userPasswordKV = await env?.REALTOR_PAGES_AUTH?.get(username);
 
 		if (userPasswordKV !== password) {
 			return new Response('Unauthorized', { status: 401, headers: { 'WWW-Authenticate': 'Basic' } });
@@ -30,6 +30,6 @@ export async function auth({ env, next, request }) {
 		return await next();
 	} catch (error) {
 		console.log(error);
-		return new Response(`${error.message}\n${error.stack}`, { status: 500 });
+		return new Response(`Server Error`, { status: 500 });
 	}
 }
