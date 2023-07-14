@@ -1,0 +1,11 @@
+{
+	"name": "cloudflare-pages-http-auth-demo",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"start": "wrangler pages dev public --live-reload --kv REALTOR_PAGES_AUTH"
+	},
+	"dependencies": {
+		"wrangler": "^3.2.0"
+	}
+}
